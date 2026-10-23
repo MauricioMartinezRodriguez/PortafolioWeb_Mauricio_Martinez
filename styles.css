@@ -101,6 +101,10 @@ html {
   color: var(--esmeralda-400);
 }
 
+.colorname {
+  color: white;
+}
+
 .menu-desktop {
   display: none;
   align-items: center;
