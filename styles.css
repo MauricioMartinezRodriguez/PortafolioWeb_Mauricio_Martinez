@@ -24,32 +24,19 @@ html {
   border-radius: 4px;
 }
 
-/* Miglioramenti degli effetti hover per los botones principales */
-button:hover {
-  transition: all 0.2s ease-in-out;
-  transform: translateY(-1px);
+/* Animaciones de Scroll (Reveal) */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
 }
 
-button:focus-visible {
-  outline: 2px solid #00e699;
-  outline-offset: 2px;
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
 }
 
-/* Efecto sutil en las tarjetas de solución */
-.solution-card:hover {
-  border-color: #00e699;
-}
-
-/* Enlaces de navegación con transición de color */
-.nav-link:hover {
-  color: #00e699 !important;
-}
-
-/* Reducir opacidad del canvas cuando el mouse está fuera */
-canvas {
-  transition: opacity 0.3s ease;
-}
-
-canvas:hover {
-  opacity: 0.7;
+/* Cursor parpadeante para el efecto de máquina de escribir */
+.cursor.typing {
+  animation: none;
 }

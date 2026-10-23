@@ -1,4 +1,4 @@
-// Animación del Fondo de Números Binarios Verdes (0 y 1)
+// --- 1. Animación del Fondo de Números Binarios Verdes (0 y 1) ---
 const canvas = document.getElementById('binaryCanvas');
 const ctx = canvas.getContext('2d');
 let drops = [];
@@ -36,48 +36,25 @@ function drawBinary() {
 }
 setInterval(drawBinary, 45);
 
-// Lógica del Menú Móvil
+
+// --- 2. Lógica del Menú Móvil ---
 const menuBtn = document.getElementById('menuBtn');
 const mobileMenu = document.getElementById('mobileMenu');
 
-// Estados del menú móvil
-let menuOpen = false;
-
 menuBtn.addEventListener('click', () => {
-  menuOpen = !menuOpen;
-  if (menuOpen) {
-    mobileMenu.classList.remove('hidden');
-    mobileMenu.classList.add('flex');
-    // Forzar reflow para la animación de entrada
-    void mobileMenu.offsetWidth;
-    mobileMenu.style.transition = 'max-height 0.3s ease-out, opacity 0.3s ease-out';
-    mobileMenu.style.maxHeight = mobileMenu.scrollHeight + 'px';
-    mobileMenu.style.opacity = '1';
-  } else {
-    mobileMenu.style.maxHeight = '0';
-    mobileMenu.style.opacity = '0';
-    setTimeout(() => {
-      mobileMenu.classList.add('hidden');
-      mobileMenu.classList.remove('flex');
-      mobileMenu.style.maxHeight = '';
-      mobileMenu.style.opacity = '';
-    }, 300);
-  }
+  mobileMenu.classList.toggle('hidden');
+  mobileMenu.classList.toggle('flex');
 });
 
 document.querySelectorAll('.mobile-link').forEach(link => {
   link.addEventListener('click', () => {
-    menuOpen = false;
-    mobileMenu.style.maxHeight = '0';
-    mobileMenu.style.opacity = '0';
-    setTimeout(() => {
-      mobileMenu.classList.add('hidden');
-      mobileMenu.classList.remove('flex');
-    }, 300);
+    mobileMenu.classList.add('hidden');
+    mobileMenu.classList.remove('flex');
   });
 });
 
-// Envío de Cotización a WhatsApp directo al número (999)-338-6267
+
+// --- 3. Envío de Cotización a WhatsApp ---
 document.getElementById('quoteForm').addEventListener('submit', function(e) {
   e.preventDefault();
   const nombre = document.getElementById('nombre').value;
@@ -87,4 +64,66 @@ document.getElementById('quoteForm').addEventListener('submit', function(e) {
   
   const texto = `Hola Mauricio, soy ${nombre}${empresa ? ' de ' + empresa : ''}. Me interesa cotizar: ${servicio}. Detalles: ${mensaje}`;
   window.open('https://wa.me/529993386267?text=' + encodeURIComponent(texto), '_blank');
+});
+
+
+// --- 4. Animaciones al hacer Scroll (Intersection Observer) ---
+const revealElements = document.querySelectorAll('.reveal');
+
+const revealCallback = (entries, observer) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('active');
+      observer.unobserve(entry.target);
+    }
+  });
+};
+
+const revealOptions = {
+  threshold: 0.15
+};
+
+const revealObserver = new IntersectionObserver(revealCallback, revealOptions);
+revealElements.forEach(el => revealObserver.observe(el));
+
+
+// --- 5. Efecto de Máquina de Escribir (Typewriter) ---
+const typedTextSpan = document.querySelector(".typed-text");
+const cursorSpan = document.querySelector(".cursor");
+
+const textArray = ["Desarrollador Frontend.", "QA Tester.", "Project Manager."];
+const typingDelay = 100;
+const erasingDelay = 50;
+const newTextDelay = 2000;
+let textArrayIndex = 0;
+let charIndex = 0;
+
+function type() {
+  if (charIndex < textArray[textArrayIndex].length) {
+    if(!cursorSpan.classList.contains("typing")) cursorSpan.classList.add("typing");
+    typedTextSpan.textContent += textArray[textArrayIndex].charAt(charIndex);
+    charIndex++;
+    setTimeout(type, typingDelay);
+  } else {
+    cursorSpan.classList.remove("typing");
+    setTimeout(erase, newTextDelay);
+  }
+}
+
+function erase() {
+  if (charIndex > 0) {
+    if(!cursorSpan.classList.contains("typing")) cursorSpan.classList.add("typing");
+    typedTextSpan.textContent = textArray[textArrayIndex].substring(0, charIndex-1);
+    charIndex--;
+    setTimeout(erase, erasingDelay);
+  } else {
+    cursorSpan.classList.remove("typing");
+    textArrayIndex++;
+    if(textArrayIndex >= textArray.length) textArrayIndex = 0;
+    setTimeout(type, typingDelay + 1100);
+  }
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+  if(textArray.length) setTimeout(type, newTextDelay + 250);
 });
