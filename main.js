@@ -36,23 +36,19 @@ function drawBinary() {
 }
 setInterval(drawBinary, 45);
 
-
 // --- 2. Lógica del Menú Móvil ---
 const menuBtn = document.getElementById('menuBtn');
 const mobileMenu = document.getElementById('mobileMenu');
 
 menuBtn.addEventListener('click', () => {
-  mobileMenu.classList.toggle('hidden');
-  mobileMenu.classList.toggle('flex');
+  mobileMenu.classList.toggle('oculto');
 });
 
-document.querySelectorAll('.mobile-link').forEach(link => {
+document.querySelectorAll('.enlace-movil').forEach(link => {
   link.addEventListener('click', () => {
-    mobileMenu.classList.add('hidden');
-    mobileMenu.classList.remove('flex');
+    mobileMenu.classList.add('oculto');
   });
 });
-
 
 // --- 3. Envío de Cotización a WhatsApp ---
 document.getElementById('quoteForm').addEventListener('submit', function(e) {
@@ -66,7 +62,6 @@ document.getElementById('quoteForm').addEventListener('submit', function(e) {
   window.open('https://wa.me/529993386267?text=' + encodeURIComponent(texto), '_blank');
 });
 
-
 // --- 4. Animaciones al hacer Scroll (Intersection Observer) ---
 const revealElements = document.querySelectorAll('.reveal');
 
@@ -74,27 +69,23 @@ const revealCallback = (entries, observer) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
       entry.target.classList.add('active');
-      observer.unobserve(entry.target);
+      observer.unobserve(entry.target); 
     }
   });
 };
 
-const revealOptions = {
-  threshold: 0.15
-};
-
-const revealObserver = new IntersectionObserver(revealCallback, revealOptions);
+const revealObserver = new IntersectionObserver(revealCallback, { threshold: 0.15 });
 revealElements.forEach(el => revealObserver.observe(el));
-
 
 // --- 5. Efecto de Máquina de Escribir (Typewriter) ---
 const typedTextSpan = document.querySelector(".typed-text");
 const cursorSpan = document.querySelector(".cursor");
 
-const textArray = ["Desarrollador Frontend.", "QA Tester.", "Project Manager."];
+// Modificación para encajar gramaticalmente con "Actualmente, me enfoco en:"
+const textArray = ["Desarrollo Frontend.", "Testing de Calidad (QA).", "Gestión de Proyectos."];
 const typingDelay = 100;
 const erasingDelay = 50;
-const newTextDelay = 2000;
+const newTextDelay = 2000; 
 let textArrayIndex = 0;
 let charIndex = 0;
 
@@ -124,6 +115,6 @@ function erase() {
   }
 }
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function() { 
   if(textArray.length) setTimeout(type, newTextDelay + 250);
 });
