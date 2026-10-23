@@ -1,0 +1,55 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@400;500;600;700;800&display=swap');
+
+html {
+  scroll-behavior: smooth;
+  font-family: 'Inter', sans-serif;
+  background-color: #040d08;
+  color: #f1f5f9;
+}
+
+.font-mono {
+  font-family: 'Fira Code', monospace;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #040d08;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #10b981;
+  border-radius: 4px;
+}
+
+/* Miglioramenti degli effetti hover per los botones principales */
+button:hover {
+  transition: all 0.2s ease-in-out;
+  transform: translateY(-1px);
+}
+
+button:focus-visible {
+  outline: 2px solid #00e699;
+  outline-offset: 2px;
+}
+
+/* Efecto sutil en las tarjetas de solución */
+.solution-card:hover {
+  border-color: #00e699;
+}
+
+/* Enlaces de navegación con transición de color */
+.nav-link:hover {
+  color: #00e699 !important;
+}
+
+/* Reducir opacidad del canvas cuando el mouse está fuera */
+canvas {
+  transition: opacity 0.3s ease;
+}
+
+canvas:hover {
+  opacity: 0.7;
+}
