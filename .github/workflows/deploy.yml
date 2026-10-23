@@ -1,0 +1,57 @@
+name: CI/CD Portafolio Web Mau
+
+# Cuándo se ejecutará este pipeline
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+# Permisos necesarios para escribir en GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  # ---------------------------------------------
+  # FASE DE CI (Integración Continua)
+  # ---------------------------------------------
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar el código
+        uses: actions/checkout@v4
+
+      - name: Pruebas de Integración (QA)
+        run: |
+          echo "Iniciando revisión de archivos críticos..."
+          test -f index.html || (echo "Error: index.html no encontrado" && exit 1)
+          test -f styles.css || (echo "Error: styles.css no encontrado" && exit 1)
+          test -f main.js || (echo "Error: main.js no encontrado" && exit 1)
+          echo "¡El código pasó las pruebas de QA exitosamente!"
+
+      - name: Empaquetar artefactos para producción
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.'
+
+  # ---------------------------------------------
+  # FASE DE CD (Despliegue Continuo)
+  # ---------------------------------------------
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    # Solo despliega a producción si los cambios están en la rama 'main'
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - name: Desplegar a GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
